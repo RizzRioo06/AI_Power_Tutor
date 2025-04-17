@@ -10,7 +10,6 @@ public class Course {
     private Tutor tutor;
     private List<String> modules;
     private List<Student> enrolledStudents;
-    private double progress;
 
     public Course(String courseId, String courseName, String description, Tutor tutor) {
         if (courseId == null || courseId.trim().isEmpty()) {
@@ -29,7 +28,6 @@ public class Course {
         this.tutor = tutor;
         this.modules = new ArrayList<>();
         this.enrolledStudents = new ArrayList<>();
-        this.progress = 0.0;
     }
 
     public void addModule(String module) {
@@ -87,21 +85,12 @@ public class Course {
         return enrolledStudents.size();
     }
 
-    public double getProgress() {
-        return progress;
-    }
-
-    public void setProgress(double progress) {
-        if (progress < 0.0 || progress > 100.0) {
-            throw new IllegalArgumentException("Progress must be between 0 and 100");
-        }
-        this.progress = progress;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Course course = (Course) o;
         return courseId.equals(course.courseId);
     }
