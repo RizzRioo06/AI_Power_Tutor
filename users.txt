@@ -1,3 +1,0 @@
-STUDENT,U0a60bc6b,Student1,Student123!,Student@gmail.com
-STUDENT,U64cfc44a,Tutor,Tutor123!,Tutor@gmail.com
-TUTOR,U5c163a6f,Teacher,Teacher123!,Teacher@gmail.com,Teaching,10
