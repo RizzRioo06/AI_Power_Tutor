@@ -3,6 +3,7 @@ package com.aitutor;
 import com.aitutor.model.*;
 import com.aitutor.ai.AIResponseEngine;
 import com.aitutor.util.FileHandler;
+import com.aitutor.util.PasswordValidator;
 import com.aitutor.exception.CourseNotFoundException;
 
 import java.util.*;
@@ -116,34 +117,13 @@ public class MainApp {
                 continue;
             }
 
-            // Allow more characters for passwords with minimum length check
-            if (fieldName.equals("Password")) {
-                if (input.length() < 8) {
-                    System.out.println("Password must be at least 8 characters long.");
-                    continue;
-                }
-                if (!input.matches("^[\\p{L}\\p{N}\\p{P}\\p{Z}]+$")) {
-                    System.out.println("Password can contain letters, numbers, spaces, and common punctuation marks.");
-                    continue;
-                }
-                // Check for at least one uppercase letter
-                if (!input.matches(".*[A-Z].*")) {
-                    System.out.println("Password must contain at least one uppercase letter.");
-                    continue;
-                }
-                // Check for at least one lowercase letter
-                if (!input.matches(".*[a-z].*")) {
-                    System.out.println("Password must contain at least one lowercase letter.");
-                    continue;
-                }
-                // Check for at least one number
-                if (!input.matches(".*\\d.*")) {
-                    System.out.println("Password must contain at least one number.");
-                    continue;
-                }
-                // Check for at least one special character
-                if (!input.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-                    System.out.println("Password must contain at least one special character.");
+            // Check password format only during registration
+            if (fieldName.equals("Password") && !isLogin) {
+                if (!PasswordValidator.isValidPasswordFormat(input)) {
+                    System.out.println("Password must be at least 8 characters long and contain:");
+                    System.out.println("- At least one number");
+                    System.out.println("- At least one uppercase letter");
+                    System.out.println("- At least one lowercase letter");
                     continue;
                 }
             }
@@ -275,25 +255,30 @@ public class MainApp {
         }
 
         System.out.print("Enter password: ");
-        String password = readStringInput("Password", false, true);
+        String password = scanner.nextLine(); // Don't validate format during login
 
         try {
             List<User> loadedUsers = FileHandler.loadUsers();
             for (User user : loadedUsers) {
-                if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                    loginAttempts.remove(username); // Reset attempts on successful login
-                    currentUser = user;
-                    sessionStartTime = System.currentTimeMillis();
-                    if (currentUser instanceof Student) {
-                        showStudentMenu();
+                if (user.getUsername().equals(username)) {
+                    if (PasswordValidator.isPasswordMatch(password, user.getPassword())) {
+                        loginAttempts.remove(username); // Reset attempts on successful login
+                        currentUser = user;
+                        sessionStartTime = System.currentTimeMillis();
+                        if (currentUser instanceof Student) {
+                            showStudentMenu();
+                        } else {
+                            showTutorMenu();
+                        }
+                        return;
                     } else {
-                        showTutorMenu();
+                        // Handle failed login with forgot password option
+                        handleFailedLoginWithOptions(username);
+                        return;
                     }
-                    return;
                 }
             }
-            // Handle failed login with forgot password option
-            handleFailedLoginWithOptions(username);
+            System.out.println("User not found!");
         } catch (IOException e) {
             System.out.println("Error loading user data: " + e.getMessage());
         }
