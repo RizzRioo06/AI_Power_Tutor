@@ -395,8 +395,9 @@ public class MainApp {
             System.out.println("1. View Profile");
             System.out.println("2. Enroll in Course");
             System.out.println("3. View Enrolled Courses");
-            System.out.println("4. Ask Question");
-            System.out.println("5. Logout");
+            System.out.println("4. View Course Recommendations");
+            System.out.println("5. Ask Question");
+            System.out.println("6. Logout");
             System.out.print("Choose an option: ");
 
             int choice = readIntInput();
@@ -411,14 +412,49 @@ public class MainApp {
                     viewEnrolledCourses();
                     break;
                 case 4:
-                    askQuestion();
+                    viewCourseRecommendations();
                     break;
                 case 5:
+                    askQuestion();
+                    break;
+                case 6:
                     currentUser = null;
                     return;
                 default:
                     System.out.println("Invalid choice!");
             }
+        }
+    }
+
+    private static void viewCourseRecommendations() {
+        if (!(currentUser instanceof Student)) {
+            System.out.println("This feature is only available for students.");
+            return;
+        }
+
+        try {
+            courses = FileHandler.loadCourses(users); // Reload latest courses
+            Student student = (Student) currentUser;
+            List<Course> recommendations = AIResponseEngine.recommendCourses(student, courses);
+
+            if (recommendations.isEmpty()) {
+                System.out.println("\nNo course recommendations available at the moment.");
+                return;
+            }
+
+            System.out.println("\n=== Recommended Courses ===");
+            System.out.println("Based on your current enrollments, we recommend:");
+
+            for (Course course : recommendations) {
+                System.out.println("\nCourse: " + course.getCourseName());
+                System.out.println("Description: " + course.getDescription());
+                System.out.println("Tutor: " + course.getTutor().getUsername());
+                System.out.println("Course ID: " + course.getCourseId());
+            }
+
+            System.out.println("\nUse the Enroll in Course option to enroll in any of these courses.");
+        } catch (IOException e) {
+            System.out.println("Error loading course recommendations: " + e.getMessage());
         }
     }
 
