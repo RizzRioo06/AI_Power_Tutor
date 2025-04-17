@@ -22,6 +22,7 @@ public class Course {
             throw new IllegalArgumentException("Tutor cannot be null");
         }
 
+        // Remove any character validation to allow special characters
         this.courseId = courseId.trim();
         this.courseName = courseName.trim();
         this.description = description != null ? description.trim() : "";

@@ -23,13 +23,21 @@ public class Student extends User {
     public void viewDashboard() {
         System.out.println("\n=== Student Dashboard ===");
         System.out.println("\nEnrolled Courses:");
-        for (Course course : enrolledCourses) {
-            System.out.println("- " + course.getCourseName());
+        if (enrolledCourses.isEmpty()) {
+            System.out.println("No courses enrolled.");
+        } else {
+            for (Course course : enrolledCourses) {
+                System.out.println("- " + course.getCourseName() + " (ID: " + course.getCourseId() + ")");
+                System.out.println("  Description: " + course.getDescription());
+                System.out.println("  Tutor: " + course.getTutor().getUsername());
+            }
         }
     }
 
     public void enrollInCourse(Course course) {
-        enrolledCourses.add(course);
+        if (!enrolledCourses.contains(course)) {
+            enrolledCourses.add(course);
+        }
     }
 
     // Getters and setters

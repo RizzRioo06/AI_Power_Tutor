@@ -112,9 +112,16 @@ public class MainApp {
             }
 
             // Allow more characters for course names
-            if (fieldName.equals("Course name") && !input.matches("^[\\p{L}\\p{N}\\p{P}\\p{Z}]+$")) {
-                System.out.println("Course name can contain letters, numbers, spaces, and common punctuation marks.");
-                continue;
+            if (fieldName.equals("Course name") || fieldName.equals("Course Name")) {
+                if (input.isEmpty()) {
+                    System.out.println("Course name cannot be empty.");
+                    continue;
+                }
+                if (input.length() > 100) {
+                    System.out.println("Course name is too long (maximum 100 characters).");
+                    continue;
+                }
+                return input; // Allow all characters for course names
             }
 
             // Check password format only during registration
@@ -136,10 +143,16 @@ public class MainApp {
             }
 
             // Allow more characters for course description
-            if (fieldName.equals("Course description") && !input.matches("^[\\p{L}\\p{N}\\p{P}\\p{Z}]+$")) {
-                System.out.println(
-                        "Course description can contain letters, numbers, spaces, and common punctuation marks.");
-                continue;
+            if (fieldName.equals("Course description") || fieldName.equals("Course Description")) {
+                if (input.isEmpty()) {
+                    System.out.println("Course description cannot be empty.");
+                    continue;
+                }
+                if (input.length() > 500) {
+                    System.out.println("Course description is too long (maximum 500 characters).");
+                    continue;
+                }
+                return input; // Allow all characters for course description
             }
 
             // Allow letters, numbers, and spaces for other fields
@@ -258,8 +271,10 @@ public class MainApp {
         String password = scanner.nextLine(); // Don't validate format during login
 
         try {
-            List<User> loadedUsers = FileHandler.loadUsers();
-            for (User user : loadedUsers) {
+            users = FileHandler.loadUsers(); // Reload users
+            courses = FileHandler.loadCourses(users); // Reload courses with proper enrollment data
+
+            for (User user : users) {
                 if (user.getUsername().equals(username)) {
                     if (PasswordValidator.isPasswordMatch(password, user.getPassword())) {
                         loginAttempts.remove(username); // Reset attempts on successful login
@@ -272,7 +287,6 @@ public class MainApp {
                         }
                         return;
                     } else {
-                        // Handle failed login with forgot password option
                         handleFailedLoginWithOptions(username);
                         return;
                     }
@@ -312,6 +326,7 @@ public class MainApp {
                 return;
             default:
                 System.out.println("Invalid choice!");
+                handleFailedLoginWithOptions(username);
         }
     }
 
@@ -489,7 +504,7 @@ public class MainApp {
             try {
                 Course course = findCourseById(courseId);
                 if (course == null) {
-                    throw new CourseNotFoundException("Course not found with ID: " + courseId);
+                    throw new CourseNotFoundException(courseId);
                 }
 
                 // Check if student is already enrolled
@@ -644,9 +659,22 @@ public class MainApp {
 
     public static void main(String[] args) {
         try {
-            // Load users and courses from file
+            FileHandler.initialize(); // Ensure data directory exists
+            // Load users first
             users = FileHandler.loadUsers();
+            // Then load courses and properly link them with users
             courses = FileHandler.loadCourses(users);
+
+            // Update currentUser if it exists (after reloading data)
+            if (currentUser != null) {
+                String currentUserId = currentUser.getUserId();
+                for (User user : users) {
+                    if (user.getUserId().equals(currentUserId)) {
+                        currentUser = user;
+                        break;
+                    }
+                }
+            }
         } catch (IOException e) {
             System.out.println("Error loading data: " + e.getMessage());
         }

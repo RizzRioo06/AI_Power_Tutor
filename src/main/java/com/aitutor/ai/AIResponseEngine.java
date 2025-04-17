@@ -46,7 +46,18 @@ public class AIResponseEngine {
     }
 
     public static String getResponse(String question) {
-        // Simple response for now
-        return "This is a sample response to: " + question;
+        List<String> responses = Arrays.asList(
+                "Based on my analysis, " + question
+                        + " is an interesting question. I would suggest exploring the core concepts first.",
+                "That's a great question! " + question
+                        + " can be approached in several ways. Let's break it down step by step.",
+                "To answer '" + question + "', let's consider the fundamental principles involved.",
+                "This is a common question in learning. For '" + question + "', I recommend starting with the basics.",
+                "Regarding '" + question + "', here's what I think: focus on understanding the key concepts first.",
+                "Let me help you with that. For '" + question + "', you should consider multiple perspectives.",
+                "Interesting question! When it comes to '" + question + "', practice is key to understanding.",
+                "From my experience, '" + question + "' requires a systematic approach to learn effectively.");
+
+        return responses.get(random.nextInt(responses.size()));
     }
 }

@@ -1,4 +1,2 @@
-TUTOR,Ud5b879c2,Hein Zaw,Chocochipp2007@,heinzaw@gmail.com,UI/UX,10
-STUDENT,U632b31b4,Asher,Chocochipp2007@,asher@gmail.com
-STUDENT,Uef5fa804,Tony,Chocochipp2007@,tony@gmail.com
-STUDENT,U7b960b8f,Zeke,Chocochipp2007@,zeke@gmail.com
+TUTOR,U21531ef8,Uno,Uno1234!,Uno@gmail.com,Web Development,12
+STUDENT,U10d0b00b,Nick,Nick1234!,Nick@gmail.com

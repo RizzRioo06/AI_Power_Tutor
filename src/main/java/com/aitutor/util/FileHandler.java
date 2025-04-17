@@ -143,6 +143,16 @@ public class FileHandler {
     public static List<Course> loadCourses(List<User> users) throws IOException {
         List<Course> loadedCourses = new ArrayList<>();
         List<String> lines = readFile(COURSES_FILE);
+        Map<String, Student> studentMap = new HashMap<>();
+
+        // First, create a map of students for faster lookup
+        for (User user : users) {
+            if (user instanceof Student) {
+                Student student = (Student) user;
+                student.getEnrolledCourses().clear(); // Clear only once at the start
+                studentMap.put(student.getUserId(), student);
+            }
+        }
 
         for (String line : lines) {
             String[] parts = line.split(",");
@@ -168,13 +178,10 @@ public class FileHandler {
                     if (parts.length >= 5 && !parts[4].isEmpty()) {
                         String[] studentIds = parts[4].split(";");
                         for (String studentId : studentIds) {
-                            for (User user : users) {
-                                if (user instanceof Student && user.getUserId().equals(studentId)) {
-                                    Student student = (Student) user;
-                                    course.enrollStudent(student);
-                                    student.enrollInCourse(course);
-                                    break;
-                                }
+                            Student student = studentMap.get(studentId);
+                            if (student != null) {
+                                course.enrollStudent(student);
+                                student.enrollInCourse(course);
                             }
                         }
                     }
