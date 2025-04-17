@@ -54,7 +54,7 @@ The AI Tutor System is an educational platform designed to facilitate online lea
 - Kyaw Hmue San
 
 ### Contributing
-We welcome contributions to improve the AI Tutor System. Please fork the repository and submit a pull request with your changes.
+We welcome contributions to improve the AI Powered Tutor System. Please fork the repository and submit a pull request with your changes.
 
 ### License
 This project is licensed under the MIT License - see the LICENSE file for details.
