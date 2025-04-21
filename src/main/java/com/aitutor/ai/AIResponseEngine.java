@@ -6,9 +6,6 @@ import java.util.*;
 public class AIResponseEngine {
     private static final Random random = new Random();
 
-    public static String generateCourseSummary(Course course) {
-        return course.generateSummary();
-    }
 
     public static List<Course> recommendCourses(Student student, List<Course> availableCourses) {
         List<Course> recommendations = new ArrayList<>();
@@ -26,8 +23,8 @@ public class AIResponseEngine {
             }
         }
 
-        // Limit to top 3 recommendations
-        if (recommendations.size() > 3) {
+        // Limit to top 2 recommendations
+        if (recommendations.size() > 2) {
             recommendations = recommendations.subList(0, 3);
         }
 
