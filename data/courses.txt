@@ -1,4 +1,4 @@
 Ca5437ba4,Object Oriented Design and Programming,OODP,U5d1efb4a,U03012d9c
-Cde7caa3d,Introduction to Software Engineering,Introduction,U5d1efb4a,U4106b94d
+Cde7caa3d,Introduction to Software Engineering,Introduction,U5d1efb4a,U4106b94d;U03012d9c
 C71677dff,Cyber Security,Introduction to Cyber Security,U43ee5429,U03012d9c
 Cee724956,Data Structure and Algorithm,Introduction to DSA,U43ee5429,U4106b94d
