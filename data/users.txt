@@ -1,2 +1,4 @@
-TUTOR,U21531ef8,Uno,Uno1234!,Uno@gmail.com,Web Development,12
-STUDENT,U10d0b00b,Nick,Nick1234!,Nick@gmail.com
+STUDENT,U03012d9c,Student1,Student1234!,student@gmail.com
+TUTOR,U5d1efb4a,Tutor1,Tutor1234!,tutor@gmail.com,Tutoring,5
+TUTOR,U43ee5429,Tutor2,Tutor1234!,tutor2@gmail.com,Teaching,3
+STUDENT,U4106b94d,Student2,Student123!,student2@gmail.com
