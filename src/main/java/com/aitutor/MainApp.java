@@ -189,10 +189,10 @@ public class MainApp {
             System.out.print("Enter username: ");
             String username = readStringInput("Username", false, false);
 
-            // Check if username is already taken
+            // Check if username is already taken // Read from files - checks for duplicate usernames 
             boolean usernameTaken = false;
             try {
-                List<User> existingUsers = FileHandler.loadUsers();
+                List<User> existingUsers = FileHandler.loadUsers(); 
                 for (User user : existingUsers) {
                     if (user.getUsername().equals(username)) {
                         usernameTaken = true;
@@ -200,7 +200,7 @@ public class MainApp {
                     }
                 }
             } catch (IOException e) {
-                System.out.println("Error checking username: " + e.getMessage());
+                System.out.println("Error checking username: " + e.getMessage()); // Exceptiomn Handling
                 continue;
             }
 
@@ -213,10 +213,10 @@ public class MainApp {
 
                 int option = readIntInput();
                 if (option == 1) {
-                    login();
+                    login(); // New attempt login if already registered 
                     return;
                 } else if (option == 2) {
-                    continue;
+                    continue; // Let user re-enter new username
                 } else if (option == 3) {
                     return;
                 } else {
@@ -230,11 +230,11 @@ public class MainApp {
             System.out.print("Enter email: ");
             String email = readStringInput("Email", false, false);
 
-            String userId = "U" + UUID.randomUUID().toString().substring(0, 8);
+            String userId = "U" + UUID.randomUUID().toString().substring(0, 8); // To generate unique ID 
 
             try {
                 if (choice == 1) {
-                    Student student = new Student(userId, username, password, email);
+                    Student student = new Student(userId, username, password, email); // Student is subclass of User class
                     users.add(student);
                     FileHandler.saveUser(student);
                 } else if (choice == 2) {
@@ -242,7 +242,7 @@ public class MainApp {
                     String specialization = readStringInput("Specialization", false, false);
                     System.out.print("Enter years of experience: ");
                     int experience = readYearsOfExperience();
-                    Tutor tutor = new Tutor(userId, username, password, email, specialization, experience);
+                    Tutor tutor = new Tutor(userId, username, password, email, specialization, experience); //Tutor is also subclass of User class 
                     users.add(tutor);
                     FileHandler.saveUser(tutor);
                 }
@@ -251,7 +251,7 @@ public class MainApp {
                 System.out.println("Registration successful!");
                 return;
             } catch (IOException e) {
-                System.out.println("Error saving user data: " + e.getMessage());
+                System.out.println("Error saving user data: " + e.getMessage()); // Exception
             }
         }
     }
