@@ -25,7 +25,7 @@ public class AIResponseEngine {
 
         // Limit to top 2 recommendations
         if (recommendations.size() > 2) {
-            recommendations = recommendations.subList(0, 3);
+            recommendations = recommendations.subList(0, 2);
         }
 
         return recommendations;
