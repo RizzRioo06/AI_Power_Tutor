@@ -33,7 +33,10 @@ public class MainApp {
         } catch (NumberFormatException e) {
             return false;
         }
-    }
+    } // .trim Removes spaces, tabs (\t), and newlines (\n, \r) from the start and end of the string.
+    //It does not remove spaces inside the string.
+
+
 
     // Helper method to safely read integer input
     private static int readIntInput() {
