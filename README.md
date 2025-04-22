@@ -71,6 +71,20 @@ The **AI Tutor System** is a Java-based educational platform designed to enhance
 
 ---
 
+### 🔑 Why We Use `UUID.randomUUID()` for IDs
+
+We use `UUID.randomUUID()` to generate unique identifiers for each student and course in the system. This ensures that:
+
+- **🆔 IDs are globally unique** – There's no risk of duplication, even if data is created across different systems or at different times.
+
+- **⚙️ No manual tracking needed** – We don’t need to maintain a counter or worry about collisions.
+
+- **🔐 Security** – UUIDs are hard to guess, making them safer in public URLs or APIs.
+
+- **📈 Scalability** – It works well even as the number of users and courses grows over time, without changes to the ID generation logic.
+
+---
+
 ## 🚀 Installation & Running
 
 1. **Clone the repository**  
